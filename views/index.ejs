@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <title><%= title %></title>
 </head>
 <body>
     <h1>Home</h1>
     <p>Ini halaman home</p>
+    <h4>Berita Terkini</h4>
+    <% news.forEach(data => { %>
+    <h4><%= data.title %></h4>
+    <p><%= data.content %></p>
+    <% }) %>
     <ul>
-        <li><a href="/">home</a></li>
+        /<li><a href="/">home</a></li>
         <li><a href="/about">about</a></li>
         <li><a href="/contact">contact</a></li>
     </ul>
