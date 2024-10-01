@@ -1,0 +1,26 @@
+<style>
+    table, th, td {
+    border:1px solid black;
+    }
+    </style>
+    <h1>Prodi</h1>
+    <p>Ini halaman prodi, menampilkan daftar prodi di MDP</p>
+    <table>
+        <tr>
+            <th>Nama Prodi</th>
+            <th>Fakultas</th>
+            <th>Singkatan</th>
+        </tr>
+        <% prodi.forEach(data => { %>
+            <tr>
+                <td><%= data.nama %></td>
+                <td><%= data.fakultas %></td>
+                <td><%= data.singkatan %></td>
+            </tr>
+        <% }) %>
+    </table>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>

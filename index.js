@@ -1,91 +1,106 @@
-const express = require("express") // impor modul express
-const app = express() // inisialisasi express
-const expressLayout = require('express-ejs-layouts0');
-const port = 3000 // port
+const express = require("express")
+const app = express()
+const expressLayout = require ("express-ejs-layouts");
+const port = 3002
 
-// Middleware
+app.set("views",__dirname + "/views");
+app.set('view engine', 'ejs');
+
+app.use(expressLayout);
 app.use(express.static('public'));
-app.use(expressLayouts);
 
-// gunakan ejs
-app.set("view engine", "ejs");
-
-// route /
-app.get("/", (req, res) => {
-    const news = [
-        {id: 1, title: "Berita 1", content: "Content berita 1"},
-        {id: 2, title: "Berita 2", content: "Content berita 2"},
-        {id: 3, title: "Berita 3", content: "Content berita 3"},
-    ];
-    //res.send("Hello World");
+//route
+app.get("/" ,(req,res) => {
+    //res.send("hello");
     //res.sendFile(__dirname + "/home.html");
-    res.render("index", {title: "Halaman Home", news});
-});
-
-// route /about
-app.get("/about", (req, res) => {
-    //res.send("About Us");
-    res.sendFile(__dirname + "/about.html");
-});
-
-// Data program studi
-const prodi = [
-    { nama: 'Sistem Informasi', singkatan: 'SI', fakultas: 'Fakultas Ilmu Komputer dan Rekayasa' },
-    { nama: 'Informatika', singkatan: 'IF', fakultas: 'Fakultas Ilmu Komputer dan Rekayasa' },
-    { nama: 'Manajemen Informatika', singkatan: 'MI', fakultas: 'Fakultas Ilmu Komputer dan Rekayasa' },
-    { nama: 'Teknik Elektro', singkatan: 'TE', fakultas: 'Fakultas Ilmu Komputer dan Rekayasa' },
-    { nama: 'Akuntansi', singkatan: 'AK', fakultas: 'Fakultas Ekonomi dan Bisnis' },
-    { nama: 'Manajemen', singkatan: 'MJ', fakultas: 'Fakultas Ekonomi dan Bisnis' }
-];
-
-// Route /prodi
-app.get('/prodi', (req, res) => {
-    res.render('prodi', { prodi });
-});
-
-// route /contact
-app.get("/contact", (req, res) => {
-    // res.send("Contact Us");
-    res.sendFile(__dirname + "/contact.html");
-});
-
-// route /mahasiswa
-app.get("/mahasiswa", (req, res) => {
-    res.json({
-        "status" : "success",
-        "message" : "Data mahasiswa",
-        "data" : [
-            {npm: 2226240001, nama: "ahmad"},
-            {npm: 2226240002, nama: "ahmad 2"},
-            {npm: 2226240003, nama: "ahmad 3"}
-        ]
-    })
-});
-
-// route /dosen
-app.get("/dosen", (req, res) => {
-    res.json({
-        "status" : "success",
-        "message" : "Data dosen",
-        "data" : [
-            {
-            prodi: "Sistem Informasi",
-            dosen: ["Iis", "Faris", "Dafid"]
+     const berita= [
+        {
+            judul: "berita 1",
+            isi : "isi berita 1"
         },
         {
-            prodi: "Informatika",
-            dosen: ["Derry", "SIska", "Yohannes"]
+            judul: "berita 2",
+            isi : "isi berita 2"
         },
-    ]
-    })
-})
-
-// handle route yang tidak terdaftar
-app.use("/", (req, res) => {
-    res.send("<h1>404 Not Found</h1>");
+    ];
+    res.render('index', {title: 'halaman home',berita, layout: 'main'});
+});
+//route
+app.get("/about" ,(req,res) => {
+    //res.send("about");
+    //res.sendFile(__dirname + "/aboutus.html");
+    res.render('aboutus', {title: 'halaman about us', layout: 'main' });
+});
+// route kontak
+app.get("/contact" ,(req,res) => {
+    //res.send("contact us");
+    //res.sendFile(__dirname + "/contact.html");
+    res.render('contact', {title: 'halaman contact', layout: 'main'});
+});
+app.get("/prodi" ,(req,res) => {
+    //res.send("contact us");
+    //res.sendFile(__dirname + "/contact.html");
+     const prodi= [
+        {
+            nama: "sistem informasi",
+            fakultas : "FIKR",
+            singkatan : "SI"
+        },
+        {
+            nama: "informatika",
+            fakultas : "FIKR",
+            singkatan : "IF"
+        },
+        {
+            nama: "teknik elektro",
+            fakultas : "FIKR",
+            singkatan : "TE"
+        },
+        {
+            nama: "manajemen informatika",
+            fakultas : "FIKR",
+            singkatan : "MI"
+        },
+        {
+            nama: "manajemen",
+            fakultas : "FEB",
+            singkatan : "MJ"
+        },
+        {
+            nama: "akutansi",
+            fakultas : "FEB",
+            singkatan : "AK"
+        },
+    ];
+    res.render('prodi', {title: 'halaman prodi', prodi, layout: 'main'});
 });
 
-// jalankan server
-app.listen(port, () => {
-    console.log(`Server dapat diakses di http://localhost:${port}`);
+app.get("/mahasiswa", (req,res)=>{
+    res.json({
+        "status" : "success",
+        "message" : "data mahasiswa",
+        "data" : [{npm: 2226240108, nama: "irpan paok"},
+            {npm: 2226240109, nama: "irpan paok2"} 
+        ]
+    })
+})
+app.get("/dosen", (req,res)=>{
+    res.json({
+        "status" : "success",
+        "message" : "data dosen",
+        "data" : [
+            {prodi : "sistem_informasi", 
+            dosen : ["Faris","Pak Iis"]
+        }
+    ]
+    })
+});
+// handle route yang tidak terdaftar
+app.use("/" ,(req,res) => {
+    res.send("<h1>404 not found</h1>");
+});
+
+//jalankan route
+app.listen(port, ()=>{
+    console.log(`server dapat di akses di http://localhost:${port}`);
 });
