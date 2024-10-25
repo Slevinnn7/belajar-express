@@ -8,4 +8,14 @@ const fakultasController = require("../controllers/fakultasController");
 // definisi rute untuk fakultas
 // mengatur rute GET untuk mendapatkan semua data fakultas
 router.get("/", fakultasController.getAllFakultas);
-//
+// mengatur rute POST untuk membuat data fakultas baru
+router.post("/", fakultasController.createFakultas);
+// mengatur rute GET untuk mendapatkan data fakultas berdasarkan ID
+router.get("/:id", fakultasController.getFakultasById);
+// mengatur rute PUT untuk memperbarui data fakultas berdasarkan ID
+router.put("/:id", fakultasController.updateFakultas);
+// mengatur rute DELETE untuk menghapus data fakultas berdasarkan ID
+router.delete("/:id", fakultasController.deleteFakultas);
+
+// mengeksport router agar dapat digunakan di file lain (misalnya, di app.js)
+module.exports = router;
